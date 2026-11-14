@@ -6,6 +6,7 @@ start = "programa"
 errores_sintacticos = []
 
 precedence = (
+    ("right", "CLAUSURA"),
     ("nonassoc", "RANGE", "RANGE_INCLUSIVE"),
     ("left", "OR"),
     ("left", "AND"),
