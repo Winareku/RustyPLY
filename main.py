@@ -1,21 +1,29 @@
 # ------------------------------------------------------------
 # main.py - Punto de entrada. Ejecuta una fase y guarda su log.
-# Uso: python main.py algoritmos/algoritmo1.rs Winareku [--fase lexico]
+# Uso: python main.py algoritmos/algoritmo1.rs Winareku [--fase lexico|sintactico]
 # ------------------------------------------------------------
+
 import argparse
 import sys
 from datetime import datetime
 
 from analizador.comun import guardar_log
 from analizador.lexico import analizar as analizar_lexico, generar_reporte as reporte_lexico
+from analizador.sintactico import analizar as analizar_sintactico, generar_reporte as reporte_sintactico
+
 
 # (codigo, ruta, usuario, ahora) -> texto
 def fase_lexica(codigo, ruta, usuario, ahora):
     return reporte_lexico(analizar_lexico(codigo), ruta, usuario, ahora)
 
+
+def fase_sintactica(codigo, ruta, usuario, ahora):
+    return reporte_sintactico(analizar_sintactico(codigo), ruta, usuario, ahora)
+
+
 FASES = {
     "lexico": fase_lexica,
-    # "sintactico": fase_sintactica,
+    "sintactico": fase_sintactica,
     # "semantico": fase_semantica,
 }
 

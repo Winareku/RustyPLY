@@ -1,11 +1,28 @@
-"""FASE SINTÁCTICA (pendiente).
+from dataclasses import dataclass, field
+from typing import List
+import ply.yacc as yacc
 
-Cómo conectarla con el léxico:
-    from analizador.lexico import tokens, construir_lexer   # lista de tokens y lexer fresco
-    # PLY yacc: yacc.yacc(); parser.parse(codigo, lexer=construir_lexer())
+from ..comun.modelos import ErrorCompilador
+from ..lexico import construir_lexer
+from . import gramatica
+from .reporte import generar_reporte
 
-Contrato sugerido, igual que el léxico:
-    def analizar(codigo: str) -> ResultadoSintactico   # (ast, errores)
-Los errores deben ser analizador.comun.ErrorCompilador con fase=FASE_SINTACTICA.
-Archivos sugeridos: gramatica.py (reglas p_*), ast.py (nodos), reporte.py.
-"""
+# True = generar parser.out
+DEBUG = False
+
+
+@dataclass
+class ResultadoSintactico:
+    errores: List[ErrorCompilador] = field(default_factory=list)
+    errores_lexicos: List[ErrorCompilador] = field(default_factory=list)
+
+
+def analizar(codigo: str) -> ResultadoSintactico:
+    gramatica.errores_sintacticos.clear()
+    parser = yacc.yacc(module=gramatica, debug=DEBUG, write_tables=False)
+    lexer = construir_lexer()
+    parser.parse(codigo, lexer=lexer)
+    return ResultadoSintactico(list(gramatica.errores_sintacticos), list(lexer.errores))
+
+
+__all__ = ["analizar", "ResultadoSintactico", "generar_reporte"]
