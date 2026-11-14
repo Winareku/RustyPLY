@@ -12,3 +12,10 @@ def p_sentencia_entrada_teclado(p):
 
 def p_entrada_teclado_read_line(p):
     "entrada_teclado : ruta LPAREN RPAREN DOT ID LPAREN AMPERSAND MUT ID RPAREN SEMICOLON"
+
+
+def p_expresion_metodo_sin_argumento(p):
+    "expresion : expresion DOT ID LPAREN RPAREN"
+
+def p_expresion_metodo_generico(p):
+    "expresion : expresion DOT ID PATHSEP LESS_THAN tipo GREATER_THAN LPAREN RPAREN"

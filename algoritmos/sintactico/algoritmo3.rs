@@ -3,3 +3,7 @@
 
 let mut entrada=texto;
 io::stdin().read_line(&mut entrada);
+
+//Limpieza de la entrada
+let entrada_limpia = entrada.trim();
+let numero = entrada_limpia.parse::<i32>().unwrap();
