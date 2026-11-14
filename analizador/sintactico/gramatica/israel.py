@@ -7,13 +7,16 @@ from .base import _columna
 
 # Condiciones con conectores lógicos
 def p_expresion_comparacion(p):
-    """expresion : expresion EQUAL expresion | expresion NOT_EQUAL expresion
-                 | expresion LESS_THAN expresion | expresion GREATER_THAN expresion
-                 | expresion LESS_EQUAL expresion | expresion GREATER_EQUAL expresion"""
+    """expresion : expresion EQUAL expresion
+                 | expresion NOT_EQUAL expresion
+                 | expresion LESS_THAN expresion
+                 | expresion GREATER_THAN expresion
+                 | expresion LESS_EQUAL expresion
+                 | expresion GREATER_EQUAL expresion"""
 
 def p_expresion_logica(p):
-    "expresion : expresion AND expresion | expresion OR expresion"
-
+    """expresion : expresion AND expresion
+                 | expresion OR expresion"""
 
 # Declaración de variables
 
@@ -52,8 +55,12 @@ def p_asignacion(p):
     "asignacion : ID operador_asignacion valor SEMICOLON"
 
 def p_operador_asignacion(p):
-    """operador_asignacion : ASSIGN | PLUS_ASSIGN | MINUS_ASSIGN
-                           | MULTIPLY_ASSIGN | DIVIDE_ASSIGN | MODULO_ASSIGN"""
+    """operador_asignacion : ASSIGN
+                           | PLUS_ASSIGN
+                           | MINUS_ASSIGN
+                           | MULTIPLY_ASSIGN
+                           | DIVIDE_ASSIGN
+                           | MODULO_ASSIGN"""
 
 
 # Estructura de datos: vector
@@ -95,10 +102,12 @@ def p_sentencia_funcion_parametros(p):
     "sentencia : FN ID LPAREN lista_parametros RPAREN bloque"
 
 def p_lista_parametros(p):
-    "lista_parametros : parametro | lista_parametros COMMA parametro"
+    """lista_parametros : parametro
+                        | lista_parametros COMMA parametro"""
 
 def p_parametro(p):
     "parametro : ID COLON tipo"
 
 def p_sentencia_retorno(p):
-    "sentencia : RETURN valor SEMICOLON | RETURN SEMICOLON"
+    """sentencia : RETURN valor SEMICOLON
+                 | RETURN SEMICOLON"""
