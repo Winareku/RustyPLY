@@ -1,0 +1,15 @@
+ANALIZADOR SINTÁCTICO - RUST (PLY)
+Archivo analizado : algoritmos/sintactico/algoritmo2.rs
+Usuario Git       : Madakase
+Fecha y hora      : 14/11/2026 17:56:27
+
+
+=== ERRORES LÉXICOS ===
+(ninguno)
+
+=== ERRORES SINTÁCTICOS ===
+(ninguno)
+
+=== RESUMEN ===
+Errores léxicos    : 0
+Errores sintácticos: 0

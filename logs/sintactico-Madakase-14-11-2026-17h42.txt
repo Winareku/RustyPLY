@@ -1,0 +1,16 @@
+ANALIZADOR SINTÁCTICO - RUST (PLY)
+Archivo analizado : algoritmos/sintactico/algoritmo2.rs
+Usuario Git       : Madakase
+Fecha y hora      : 14/11/2026 17:42:15
+
+
+=== ERRORES LÉXICOS ===
+(ninguno)
+
+=== ERRORES SINTÁCTICOS ===
+[ERROR sintáctico] Línea 99, Columna 38: Token inesperado '(' (LPAREN)
+[ERROR sintáctico] Línea 100, Columna 27: Token inesperado '(' (LPAREN)
+
+=== RESUMEN ===
+Errores léxicos    : 0
+Errores sintácticos: 2

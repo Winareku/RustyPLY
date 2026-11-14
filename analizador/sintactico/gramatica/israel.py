@@ -111,3 +111,16 @@ def p_parametro(p):
 def p_sentencia_retorno(p):
     """sentencia : RETURN valor SEMICOLON
                  | RETURN SEMICOLON"""
+
+
+# Llamadas a funciones
+def p_primaria_llamada_funcion(p):
+    "primaria : llamada_funcion"
+
+def p_llamada_funcion(p):
+    """llamada_funcion : ruta LPAREN lista_args RPAREN
+                       | ruta LPAREN RPAREN"""
+
+def p_lista_args(p):
+    """lista_args : valor
+                  | lista_args COMMA valor"""
