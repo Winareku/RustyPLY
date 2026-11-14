@@ -1,0 +1,55 @@
+ANALIZADOR LÉXICO - RUST (PLY)
+Archivo analizado : algoritmos/algoritmo1.rs
+Usuario Git       : Winareku
+Fecha y hora      : 14/11/2026 09:14:48
+
+=== TOKENS RECONOCIDOS ===
+LÍNEA  COL   TIPO              VALOR
+-------------------------------------------------------
+4      1     FN                'fn'
+4      4     ID                'main'
+4      8     LPAREN            '('
+4      9     RPAREN            ')'
+4      11    LBRACE            '{'
+6      5     LET               'let'
+6      9     ID                'datos'
+6      15    ASSIGN            '='
+6      17    LPAREN            '('
+6      18    INTEGER_LITERAL   '10'
+6      20    COMMA             ','
+6      22    INTEGER_LITERAL   '20'
+6      24    RPAREN            ')'
+6      25    SEMICOLON         ';'
+10     5     LET               'let'
+10     9     ID                'arreglo'
+10     17    ASSIGN            '='
+10     19    LBRACKET          '['
+10     20    INTEGER_LITERAL   '1'
+10     21    COMMA             ','
+10     23    INTEGER_LITERAL   '2'
+10     24    COMMA             ','
+10     26    INTEGER_LITERAL   '3'
+10     27    COMMA             ','
+10     29    INTEGER_LITERAL   '4'
+10     30    COMMA             ','
+10     32    INTEGER_LITERAL   '5'
+10     33    RBRACKET          ']'
+10     34    SEMICOLON         ';'
+12     5     LBRACE            '{'
+14     9     LET               'let'
+14     13    ID                'x'
+14     15    ASSIGN            '='
+14     17    ID                'arreglo'
+14     24    LBRACKET          '['
+14     25    INTEGER_LITERAL   '0'
+14     26    RBRACKET          ']'
+14     27    SEMICOLON         ';'
+15     5     RBRACE            '}'
+16     1     RBRACE            '}'
+
+=== ERRORES LÉXICOS ===
+(ninguno)
+
+=== RESUMEN ===
+Tokens reconocidos: 40
+Errores léxicos   : 0

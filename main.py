@@ -1,64 +1,45 @@
 # ------------------------------------------------------------
-# main.py - Ejecuta el analizador léxico y genera el log
+# main.py - Punto de entrada. Ejecuta una fase y guarda su log.
+# Uso: python main.py algoritmos/algoritmo1.rs Winareku [--fase lexico]
 # ------------------------------------------------------------
-
-# Uso: python main.py algoritmos/algoritmo1.rs Winareku
-
-import os
+import argparse
 import sys
 from datetime import datetime
-from analizador_lexico import analizar
+
+from analizador.comun import guardar_log
+from analizador.lexico import analizar as analizar_lexico, generar_reporte as reporte_lexico
+
+# (codigo, ruta, usuario, ahora) -> texto
+def fase_lexica(codigo, ruta, usuario, ahora):
+    return reporte_lexico(analizar_lexico(codigo), ruta, usuario, ahora)
+
+FASES = {
+    "lexico": fase_lexica,
+    # "sintactico": fase_sintactica,
+    # "semantico": fase_semantica,
+}
+
 
 def main():
-    if len(sys.argv) != 3:
-        print("Uso: python main.py <archivo.rs> <usuarioGit>")
-        sys.exit(1)
+    ap = argparse.ArgumentParser(description="Analizador de Rust (subconjunto)")
+    ap.add_argument("archivo", help="archivo .rs a analizar")
+    ap.add_argument("usuario", help="usuario Git (se usa en el nombre del log)")
+    ap.add_argument("--fase", choices=FASES, default="lexico")
+    args = ap.parse_args()
 
-    ruta, usuario = sys.argv[1], sys.argv[2]
-    
     try:
-        with open(ruta, encoding='utf-8') as f:
+        with open(args.archivo, encoding="utf-8") as f:
             codigo = f.read()
-    except FileNotFoundError:
-        print(f"Error: No se encontró el archivo '{ruta}'")
+    except (FileNotFoundError, UnicodeDecodeError) as e:
+        print(f"Error: no se pudo leer '{args.archivo}': {e}")
         sys.exit(1)
 
     ahora = datetime.now()
-    tokens, errores = analizar(codigo)
-
-    lineas = [
-        "ANALIZADOR LÉXICO - RUST (PLY)",
-        f"Archivo analizado : {ruta}",
-        f"Usuario Git       : {usuario}",
-        f"Fecha y hora      : {ahora.strftime('%d/%m/%Y %H:%M:%S')}",
-        "",
-        "=== TOKENS RECONOCIDOS ===",
-        f"{'LÍNEA':<7}{'COL':<6}{'TIPO':<14}VALOR",
-        "-" * 50,
-    ]
-    for t in tokens:
-        lineas.append(f"{t['linea']:<7}{t['columna']:<6}{t['tipo']:<14}{t['valor']!r}")
-
-    lineas += ["", "=== ERRORES LÉXICOS ==="]
-    if errores:
-        for e in errores:
-            lineas.append(f"[ERROR] Línea {e['linea']}, Columna {e['columna']}: {e['mensaje']}")
-    else:
-        lineas.append("(ninguno)")
-
-    lineas += ["", "=== RESUMEN ===",
-               f"Tokens reconocidos: {len(tokens)}",
-               f"Errores léxicos   : {len(errores)}"]
-    texto = "\n".join(lineas) + "\n"
-
-    os.makedirs("logs", exist_ok=True)
-    nombre = f"lexico-{usuario}-{ahora.strftime('%d-%m-%Y-%Hh%M')}.txt"
-    destino = os.path.join("logs", nombre)
-    with open(destino, "w", encoding="utf-8") as f:
-        f.write(texto)
-
+    texto = FASES[args.fase](codigo, args.archivo, args.usuario, ahora)
+    destino = guardar_log(args.fase, args.usuario, texto, ahora)
     print(texto)
     print(f"Log guardado exitosamente en: {destino}")
+
 
 if __name__ == "__main__":
     main()
