@@ -38,3 +38,26 @@ def p_lista_campos_struct(p):
 
 def p_campo_struct(p):
     "campo_struct : ID COLON tipo"
+
+
+def p_valor_instancia_struct(p):
+    "valor : instancia_struct"
+
+
+def p_instancia_struct(p):
+    "instancia_struct : ruta LBRACE campos_instancia_struct RBRACE"
+
+
+def p_campos_instancia_struct(p):
+    """campos_instancia_struct : lista_campos_instancia_struct
+                                | lista_campos_instancia_struct COMMA
+                                | empty"""
+
+
+def p_lista_campos_instancia_struct(p):
+    """lista_campos_instancia_struct : campo_instancia_struct
+                                        | lista_campos_instancia_struct COMMA campo_instancia_struct"""
+
+
+def p_campo_instancia_struct(p):
+    "campo_instancia_struct : ID COLON valor"

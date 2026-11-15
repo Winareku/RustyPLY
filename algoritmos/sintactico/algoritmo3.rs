@@ -14,3 +14,9 @@ struct Persona {
     nombre: String,
     edad: i32,
 }
+
+// Instanciación de la estructura
+let persona = Persona {
+    nombre: "Cesar",
+    edad: 20,
+};
