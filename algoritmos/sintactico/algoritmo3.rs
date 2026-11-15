@@ -52,3 +52,20 @@ let otra_persona = Persona::new("Ana", 30);
 
 // Llamada al metodo con self
 otra_persona.mostrar_nombre();
+
+
+// Estructura de datos HashMap
+let mut edades: HashMap<String, i32> = HashMap::new();
+edades.insert("Ana", 30);
+
+// Estructura de control for
+for elemento in edades {
+    println!("{}", elemento);
+}
+
+// Estructura de control match
+match numero {
+    0 => println!("Cero"),
+    1 => println!("Uno"),
+    _ => println!("Otro"),
+}

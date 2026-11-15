@@ -111,3 +111,51 @@ def p_receptor_self(p):
 # Retorno de una instancia de struct al final de una función
 def p_cola_instancia_struct(p):
     "cola : instancia_struct"
+
+
+# Métodos con argumentos, usados en operaciones como HashMap.insert()
+def p_expresion_metodo_con_argumentos(p):
+    "expresion : expresion DOT ID LPAREN lista_args RPAREN"
+
+
+# Estructura de control for
+def p_sentencia_for(p):
+    "sentencia : FOR ID IN expresion bloque"
+
+
+# Estructura de control match
+def p_sentencia_match(p):
+    "sentencia : expresion_match"
+
+
+def p_expresion_match(p):
+    "expresion_match : MATCH expresion LBRACE brazos_match RBRACE"
+
+
+# Brazos de match con coma final opcional
+def p_brazos_match(p):
+    """brazos_match : lista_brazos_match
+                    | lista_brazos_match COMMA"""
+
+
+# Lista de uno o más brazos de match
+def p_lista_brazos_match(p):
+    """lista_brazos_match : brazo_match
+                            | lista_brazos_match COMMA brazo_match"""
+
+
+# Regla para cada brazo: patrón => valor
+def p_brazo_match(p):
+    "brazo_match : patron_match FAT_ARROW valor"
+
+
+# Patrones permitidos en match
+def p_patron_match(p):
+    """patron_match : INTEGER_LITERAL
+                    | FLOAT_LITERAL
+                    | STRING_LITERAL
+                    | CHAR_LITERAL
+                    | TRUE
+                    | FALSE
+                    | ID
+                    | UNDERSCORE"""
