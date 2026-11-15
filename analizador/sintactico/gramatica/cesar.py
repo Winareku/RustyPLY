@@ -61,3 +61,53 @@ def p_lista_campos_instancia_struct(p):
 
 def p_campo_instancia_struct(p):
     "campo_instancia_struct : ID COLON valor"
+
+
+#Acceso a campos de una estructura
+def p_expresion_acceso_campo(p):
+    "expresion : expresion DOT ID"
+
+# Bloque impl
+def p_sentencia_impl(p):
+    "sentencia : bloque_impl"
+
+
+def p_bloque_impl(p):
+    "bloque_impl : IMPL tipo LBRACE contenido_impl RBRACE"
+
+
+# Contenido del bloque impl
+def p_contenido_impl(p):
+    """contenido_impl : lista_elementos_impl
+                        | empty"""
+
+
+def p_lista_elementos_impl(p):
+    """lista_elementos_impl : elemento_impl
+                            | lista_elementos_impl elemento_impl"""
+
+
+# Funciones asociadas y métodos permitidos dentro de impl
+def p_elemento_impl(p):
+    """elemento_impl : funcion_retorno
+                        | metodo_self"""
+
+
+# Métodos con self, &self o &mut self
+def p_metodo_self(p):
+    """metodo_self : FN ID LPAREN receptor_self RPAREN bloque
+                    | FN ID LPAREN receptor_self COMMA lista_parametros RPAREN bloque
+                    | FN ID LPAREN receptor_self RPAREN ARROW tipo bloque
+                    | FN ID LPAREN receptor_self COMMA lista_parametros RPAREN ARROW tipo bloque"""
+
+
+# Formas permitidas para recibir self
+def p_receptor_self(p):
+    """receptor_self : SELF
+                        | AMPERSAND SELF
+                        | AMPERSAND MUT SELF"""
+
+
+# Retorno de una instancia de struct al final de una función
+def p_cola_instancia_struct(p):
+    "cola : instancia_struct"
