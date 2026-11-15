@@ -19,3 +19,22 @@ def p_expresion_metodo_sin_argumento(p):
 
 def p_expresion_metodo_generico(p):
     "expresion : expresion DOT ID PATHSEP LESS_THAN tipo GREATER_THAN LPAREN RPAREN"
+
+def p_sentencia_definicion_struct(p):
+    "sentencia : definicion_struct"
+
+def p_definicion_struct(p):
+    "definicion_struct : STRUCT ID LBRACE campos_struct RBRACE"
+
+def p_campos_struct(p):
+    """campos_struct : lista_campos_struct
+                        | lista_campos_struct COMMA
+                        | empty"""
+
+def p_lista_campos_struct(p):
+    """lista_campos_struct : campo_struct
+                            | lista_campos_struct COMMA campo_struct"""
+
+
+def p_campo_struct(p):
+    "campo_struct : ID COLON tipo"

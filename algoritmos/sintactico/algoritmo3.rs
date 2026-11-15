@@ -7,3 +7,10 @@ io::stdin().read_line(&mut entrada);
 //Limpieza de la entrada
 let entrada_limpia = entrada.trim();
 let numero = entrada_limpia.parse::<i32>().unwrap();
+
+
+// Definicion de una estructura
+struct Persona {
+    nombre: String,
+    edad: i32,
+}
