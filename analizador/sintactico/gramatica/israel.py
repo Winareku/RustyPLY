@@ -124,3 +124,47 @@ def p_llamada_funcion(p):
 def p_lista_args(p):
     """lista_args : valor
                   | lista_args COMMA valor"""
+
+
+# ============================================================
+# Reglas sintácticas faltantes
+# ============================================================
+
+# FAVOR REVISAR SI ENTRAN EN CONFLICTO CON LAS OTRAS
+
+# Rangos
+
+def p_expresion_rango(p):
+    """expresion : expresion RANGE expresion
+                 | expresion RANGE_INCLUSIVE expresion"""
+
+
+# Referencia y desreferencia
+
+def p_expresion_referencia(p):
+    """expresion : AMPERSAND expresion %prec UMINUS
+                 | AMPERSAND MUT expresion %prec UMINUS"""
+
+def p_expresion_desreferencia(p):
+    "expresion : MULTIPLY expresion %prec UMINUS"
+
+
+# Asignación a campo, índice y desreferencia
+
+def p_asignacion_lugar(p):
+    "asignacion : lugar operador_asignacion valor SEMICOLON"
+
+def p_lugar(p):
+    """lugar : expresion DOT ID
+             | expresion DOT INTEGER_LITERAL
+             | expresion LBRACKET expresion RBRACKET
+             | MULTIPLY expresion %prec UMINUS"""
+
+
+# Variables globales con static
+
+def p_declaracion_static(p):
+    "declaracion : STATIC ID COLON tipo ASSIGN valor SEMICOLON"
+
+def p_declaracion_static_mut(p):
+    "declaracion : STATIC MUT ID COLON tipo ASSIGN valor SEMICOLON"

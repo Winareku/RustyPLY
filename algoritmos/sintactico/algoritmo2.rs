@@ -101,3 +101,52 @@ fn ejecutar() {
     println!("Resultado: {}", resultado);
     return;
 }
+
+//Rangos
+    for i in a..b { }
+    for i in a..=b { }
+ 
+    //Referencias, acceso y rutas
+    let ref1 = &a;
+    let ref2 = &mut a;
+    let deref = *ref1;
+    let campo = punto.x;
+    let ruta = std::io::stdin();
+    let mapa = HashMap::new();
+    mapa.read_line(&mut entrada);
+ 
+    //Flechas
+    fn doble(x: bool) -> bool { x }
+    match a { b => c, _ => d }
+ 
+    //Clausuras (usan | y ||)
+    let cl1 = |a, b| a + b;
+    let cl2 = || a;
+    let cl3 = |a| a || b;
+ 
+    //Operadores pegados sin espacios
+    let p1 = a+b-c*d/e%f;
+    let p2 = a<=b&&c>=d||e!=f;
+    let p3 = a..=b;
+    let p4 = a..b;
+    x+=y;
+    x-=y;
+
+    //Rangos
+    let rango = 0..10;
+    let inclusivo = 0..=10;
+
+    //Referencias
+    let referencia = &variable;
+    let mutable = &mut variable;
+    let valor = *referencia;
+
+    //Asignacion a campos e indices
+    persona.edad = 20;
+    vector[0] = 100;
+    *referencia = 30;
+
+    //Variables static
+    static MAXIMO: i32 = 100;
+    static mut CONTADOR: i32 = 0;
+    
