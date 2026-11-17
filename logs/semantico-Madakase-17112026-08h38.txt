@@ -1,0 +1,25 @@
+ANALIZADOR SEMÁNTICO - RUST (PLY)
+Archivo analizado : algoritmos/semantico/ejemplo_errores_israel.rs
+Usuario Git       : Madakase
+Fecha y hora      : 17/11/2026 08:38:31
+
+
+=== ERRORES LÉXICOS ===
+(ninguno)
+
+=== ERRORES SINTÁCTICOS ===
+(ninguno)
+
+=== ERRORES SEMÁNTICOS ===
+[ERROR semántico] Línea 7, Columna 5: No se puede asignar dos veces a la variable inmutable "inmutable".
+[ERROR semántico] Línea 10, Columna 5: No se puede asignar dos veces a la variable inmutable "mensaje".
+[ERROR semántico] Línea 13, Columna 9: Se esperaba i32 pero se encontró &str.
+[ERROR semántico] Línea 14, Columna 9: Se esperaba f64 pero se encontró bool.
+[ERROR semántico] Línea 18, Columna 5: Se esperaba i32 pero se encontró bool.
+[ERROR semántico] Línea 19, Columna 5: Se esperaba i32 pero se encontró &str.
+[ERROR semántico] Línea 22, Columna 5: Se esperaba f64 pero se encontró bool.
+
+=== RESUMEN ===
+Errores léxicos    : 0
+Errores sintácticos: 0
+Errores semánticos : 7

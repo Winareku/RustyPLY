@@ -1,6 +1,6 @@
 # ------------------------------------------------------------
 # main.py - Punto de entrada. Ejecuta una fase y guarda su log.
-# Uso: python main.py algoritmos/sintactico/algoritmo1.rs Winareku [--fase lexico|sintactico]
+# Uso: python main.py algoritmos/lexico/algoritmo1_windsor.rs Winareku --fase lexico
 # ------------------------------------------------------------
 
 import argparse

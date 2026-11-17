@@ -1,0 +1,19 @@
+ANALIZADOR SEMÁNTICO - RUST (PLY)
+Archivo analizado : algoritmos/semantico/algoritmo3_cesar.rs
+Usuario Git       : MoreiraC18
+Fecha y hora      : 17/11/2026 08:38:37
+
+
+=== ERRORES LÉXICOS ===
+(ninguno)
+
+=== ERRORES SINTÁCTICOS ===
+(ninguno)
+
+=== ERRORES SEMÁNTICOS ===
+(ninguno)
+
+=== RESUMEN ===
+Errores léxicos    : 0
+Errores sintácticos: 0
+Errores semánticos : 0

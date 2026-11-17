@@ -1,0 +1,19 @@
+ANALIZADOR SEMÁNTICO - RUST (PLY)
+Archivo analizado : algoritmos/semantico/algoritmo1_windsor.rs
+Usuario Git       : Winareku
+Fecha y hora      : 17/11/2026 08:55:31
+
+
+=== ERRORES LÉXICOS ===
+(ninguno)
+
+=== ERRORES SINTÁCTICOS ===
+(ninguno)
+
+=== ERRORES SEMÁNTICOS ===
+(ninguno)
+
+=== RESUMEN ===
+Errores léxicos    : 0
+Errores sintácticos: 0
+Errores semánticos : 0

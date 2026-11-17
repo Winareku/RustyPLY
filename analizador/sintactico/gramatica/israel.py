@@ -8,6 +8,8 @@ from ...semantico.arbol import (
     Asignacion,
     BucleWhile,
     DeclaracionVariable,
+    DefinicionFuncion,
+    LlamadaFuncion,
 )
 
 # Condiciones con conectores lógicos
@@ -153,21 +155,58 @@ def p_sentencia_continue(p):
 
 def p_sentencia_funcion_retorno(p):
     "sentencia : funcion_retorno"
+    p[0] = p[1]
 
 def p_funcion_retorno(p):
     """funcion_retorno : FN ID LPAREN RPAREN ARROW tipo bloque
                        | FN ID LPAREN lista_parametros RPAREN ARROW tipo bloque"""
+    col = _columna(p.lexer.lexdata, p.lexpos(1))
+    if len(p) == 8:
+        p[0] = DefinicionFuncion(
+            nombre=p[2],
+            parametros=[],
+            tipo_retorno=p[6],
+            bloque=p[7],
+            linea=p.lineno(1),
+            columna=col,
+        )
+    else:
+        p[0] = DefinicionFuncion(
+            nombre=p[2],
+            parametros=p[4] or [],
+            tipo_retorno=p[7],
+            bloque=p[8],
+            linea=p.lineno(1),
+            columna=col,
+        )
 
 def p_sentencia_funcion_parametros(p):
     "sentencia : FN ID LPAREN lista_parametros RPAREN bloque"
+    col = _columna(p.lexer.lexdata, p.lexpos(1))
+    p[0] = DefinicionFuncion(
+        nombre=p[2],
+        parametros=p[4] or [],
+        tipo_retorno="()",
+        bloque=p[6],
+        linea=p.lineno(1),
+        columna=col,
+    )
 
 def p_lista_parametros(p):
     """lista_parametros : parametro
                         | lista_parametros COMMA parametro"""
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = p[1] + [p[3]]
 
 def p_parametro(p):
     """parametro : ID COLON tipo
                  | MUT ID COLON tipo"""
+    if len(p) == 4:
+        p[0] = (p[1], p[3])
+    else:
+        p[0] = (p[2], p[4])
 
 def p_sentencia_retorno(p):
     """sentencia : RETURN valor SEMICOLON
@@ -177,10 +216,20 @@ def p_sentencia_retorno(p):
 # Llamadas a funciones
 def p_primaria_llamada_funcion(p):
     "primaria : llamada_funcion"
+    p[0] = p[1]
 
 def p_llamada_funcion(p):
     """llamada_funcion : ruta LPAREN lista_args RPAREN
                        | ruta LPAREN RPAREN"""
+    col = _columna(p.lexer.lexdata, p.lexpos(2))
+    nombre = p[1].nombre if hasattr(p[1], "nombre") else str(p[1])
+    args = p[3] if len(p) == 5 else []
+    p[0] = LlamadaFuncion(
+        nombre=nombre,
+        argumentos=args or [],
+        linea=p[1].linea if hasattr(p[1], "linea") else p.lineno(2),
+        columna=p[1].columna if hasattr(p[1], "columna") else col,
+    )
 
 # ============================================================
 # Reglas sintácticas faltantes

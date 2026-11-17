@@ -1,0 +1,33 @@
+ANALIZADOR SEMÁNTICO - RUST (PLY)
+Archivo analizado : algoritmos/semantico/ejemplo_errores.rs
+Usuario Git       : Winareku
+Fecha y hora      : 17/11/2026 08:38:42
+
+
+=== ERRORES LÉXICOS ===
+(ninguno)
+
+=== ERRORES SINTÁCTICOS ===
+(ninguno)
+
+=== ERRORES SEMÁNTICOS ===
+[ERROR semántico] Línea 12, Columna 1: El struct 'Punto' ya fue declarado en este ámbito
+[ERROR semántico] Línea 17, Columna 1: La función 'duplicada' ya fue declarada en este ámbito
+[ERROR semántico] Línea 29, Columna 23: Tipos incompatibles en operación aritmética '+': 'i32' y 'f64' (se requiere conversión explícita)
+[ERROR semántico] Línea 30, Columna 23: No se puede aplicar el operador '-' entre tipos no numéricos ('i32' y '&str')
+[ERROR semántico] Línea 33, Columna 8: La condición en la estructura de control debe ser de tipo 'bool', pero se encontró 'i32'
+[ERROR semántico] Línea 36, Columna 11: La condición en la estructura de control debe ser de tipo 'bool', pero se encontró 'f64'
+[ERROR semántico] Línea 43, Columna 5: No se puede asignar dos veces a la variable inmutable "inmutable".
+[ERROR semántico] Línea 46, Columna 9: Se esperaba i32 pero se encontró &str.
+[ERROR semántico] Línea 48, Columna 5: Se esperaba i32 pero se encontró bool.
+[ERROR semántico] Línea 52, Columna 13: Faltan campos para instanciar 'Punto': y
+[ERROR semántico] Línea 52, Columna 13: Campos no definidos en 'Punto': w
+[ERROR semántico] Línea 52, Columna 13: El campo 'x' de 'Punto' debe ser 'i32', pero se recibió '&str'
+[ERROR semántico] Línea 58, Columna 17: La función 'operar' esperaba 1 argumentos, pero recibió 0
+[ERROR semántico] Línea 59, Columna 17: El argumento 1 de 'operar' debe ser 'i32', pero se recibió '&str'
+[ERROR semántico] Línea 60, Columna 17: La función 'no_declarada' no está declarada
+
+=== RESUMEN ===
+Errores léxicos    : 0
+Errores sintácticos: 0
+Errores semánticos : 15
