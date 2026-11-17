@@ -1,0 +1,21 @@
+ANALIZADOR SEMÁNTICO - RUST (PLY)
+Archivo analizado : .\algoritmos\semantico\algoritmo3.rs
+Usuario Git       : MoreiraC18
+Fecha y hora      : 17/11/2026 00:23:24
+
+
+=== ERRORES LÉXICOS ===
+(ninguno)
+
+=== ERRORES SINTÁCTICOS ===
+(ninguno)
+
+=== ERRORES SEMÁNTICOS ===
+[ERROR semántico] Línea 10, Columna 28: Faltan campos para instanciar 'Persona': edad
+[ERROR semántico] Línea 10, Columna 28: Campos no definidos en 'Persona': activo
+[ERROR semántico] Línea 10, Columna 28: El campo 'nombre' de 'Persona' debe ser '&str', pero se recibió 'i32'
+
+=== RESUMEN ===
+Errores léxicos    : 0
+Errores sintácticos: 0
+Errores semánticos : 3
