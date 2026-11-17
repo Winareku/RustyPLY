@@ -69,3 +69,36 @@ match numero {
     1 => println!("Uno"),
     _ => println!("Otro"),
 }
+
+use std::io;
+use std::collections::HashMap;
+
+// read_line encadenado con expect
+let mut linea = String::new();
+io::stdin().read_line(&mut linea).expect("Error al leer");
+
+// Función asociada sin retorno dentro de impl
+impl Persona {
+    fn saludar_a_todos() {
+        println!("Hola");
+    }
+}
+
+// for con tupla sobre un HashMap
+for (nombre, edad) in &edades {
+    println!("{} {}", nombre, edad);
+}
+
+// match con bloques, Ok/Err y rangos
+match linea.trim().parse::<i32>() {
+    Ok(n) => {
+        println!("{}", n);
+    }
+    Err(_) => println!("invalido"),
+}
+
+let categoria = match numero {
+    1..=5 => 1,
+    6 | 7 => 2,
+    _ => 3,
+};

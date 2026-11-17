@@ -1,6 +1,6 @@
 # ------------------------------------------------------------
 # main.py - Punto de entrada. Ejecuta una fase y guarda su log.
-# Uso: python main.py algoritmos/algoritmo1.rs Winareku [--fase lexico|sintactico]
+# Uso: python main.py algoritmos/sintactico/algoritmo1.rs Winareku [--fase lexico|sintactico]
 # ------------------------------------------------------------
 
 import argparse
@@ -32,7 +32,7 @@ def main():
     ap = argparse.ArgumentParser(description="Analizador de Rust (subconjunto)")
     ap.add_argument("archivo", help="archivo .rs a analizar")
     ap.add_argument("usuario", help="usuario Git (se usa en el nombre del log)")
-    ap.add_argument("--fase", choices=FASES, default="lexico")
+    ap.add_argument("--fase", choices=FASES, default="sintactico")
     args = ap.parse_args()
 
     try:

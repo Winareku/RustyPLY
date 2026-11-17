@@ -149,4 +149,18 @@ fn ejecutar() {
     //Variables static
     static MAXIMO: i32 = 100;
     static mut CONTADOR: i32 = 0;
-    
+
+    // Declaraciones sin valor inicial
+    let x;
+    let y: i32;
+    let mut z;
+    let mut w: f64;
+
+    // Parámetro mutable
+    fn incrementar(mut n: i32) -> i32 {
+        n += 1;
+        return n;
+    }
+
+    // Match como valor
+    let etiqueta = match a { 1 => 10, _ => 0 };

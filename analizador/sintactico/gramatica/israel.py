@@ -38,6 +38,12 @@ def p_declaracion_mutable_tipo(p):
 def p_declaracion_constante(p):
     "declaracion : CONST ID COLON tipo ASSIGN valor SEMICOLON"
 
+def p_declaracion_sin_valor(p):
+    """declaracion : LET ID SEMICOLON
+                   | LET MUT ID SEMICOLON
+                   | LET ID COLON tipo SEMICOLON
+                   | LET MUT ID COLON tipo SEMICOLON"""
+
 def p_declaracion_tupla(p):
     "declaracion : LET LPAREN lista_id RPAREN ASSIGN valor SEMICOLON"
 
@@ -106,7 +112,8 @@ def p_lista_parametros(p):
                         | lista_parametros COMMA parametro"""
 
 def p_parametro(p):
-    "parametro : ID COLON tipo"
+    """parametro : ID COLON tipo
+                 | MUT ID COLON tipo"""
 
 def p_sentencia_retorno(p):
     """sentencia : RETURN valor SEMICOLON
@@ -120,11 +127,6 @@ def p_primaria_llamada_funcion(p):
 def p_llamada_funcion(p):
     """llamada_funcion : ruta LPAREN lista_args RPAREN
                        | ruta LPAREN RPAREN"""
-
-def p_lista_args(p):
-    """lista_args : valor
-                  | lista_args COMMA valor"""
-
 
 # ============================================================
 # Reglas sintácticas faltantes

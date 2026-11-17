@@ -7,13 +7,6 @@
 # ============================================================
 from .base import *
 
-def p_sentencia_entrada_teclado(p):
-    "sentencia : entrada_teclado"
-
-def p_entrada_teclado_read_line(p):
-    "entrada_teclado : ruta LPAREN RPAREN DOT ID LPAREN AMPERSAND MUT ID RPAREN SEMICOLON"
-
-
 def p_expresion_metodo_sin_argumento(p):
     "expresion : expresion DOT ID LPAREN RPAREN"
 
@@ -120,7 +113,8 @@ def p_expresion_metodo_con_argumentos(p):
 
 # Estructura de control for
 def p_sentencia_for(p):
-    "sentencia : FOR ID IN expresion bloque"
+    """sentencia : FOR ID IN expresion bloque
+                 | FOR LPAREN lista_id RPAREN IN expresion bloque"""
 
 
 # Estructura de control match
@@ -131,31 +125,65 @@ def p_sentencia_match(p):
 def p_expresion_match(p):
     "expresion_match : MATCH expresion LBRACE brazos_match RBRACE"
 
-
-# Brazos de match con coma final opcional
+# Brazos de match. Cada brazo termina en coma; la coma es opcional si el
 def p_brazos_match(p):
-    """brazos_match : lista_brazos_match
-                    | lista_brazos_match COMMA"""
+    """brazos_match : lista_brazos_terminados
+                    | lista_brazos_terminados brazo_final
+                    | brazo_final"""
 
 
-# Lista de uno o más brazos de match
-def p_lista_brazos_match(p):
-    """lista_brazos_match : brazo_match
-                            | lista_brazos_match COMMA brazo_match"""
+def p_lista_brazos_terminados(p):
+    """lista_brazos_terminados : brazo_terminado
+                               | lista_brazos_terminados brazo_terminado"""
 
 
-# Regla para cada brazo: patrón => valor
-def p_brazo_match(p):
-    "brazo_match : patron_match FAT_ARROW valor"
+def p_brazo_terminado(p):
+    """brazo_terminado : patron_match FAT_ARROW valor COMMA
+                       | patron_match FAT_ARROW bloque COMMA
+                       | patron_match FAT_ARROW bloque"""
+
+
+def p_brazo_final(p):
+    "brazo_final : patron_match FAT_ARROW valor"
 
 
 # Patrones permitidos en match
 def p_patron_match(p):
-    """patron_match : INTEGER_LITERAL
-                    | FLOAT_LITERAL
-                    | STRING_LITERAL
-                    | CHAR_LITERAL
-                    | TRUE
-                    | FALSE
-                    | ID
-                    | UNDERSCORE"""
+    """patron_match : patron_simple
+                    | patron_match PIPE patron_simple"""
+
+
+def p_patron_simple(p):
+    """patron_simple : INTEGER_LITERAL
+                     | MINUS INTEGER_LITERAL
+                     | FLOAT_LITERAL
+                     | STRING_LITERAL
+                     | CHAR_LITERAL
+                     | TRUE
+                     | FALSE
+                     | UNDERSCORE
+                     | ruta
+                     | ruta LPAREN lista_patrones RPAREN
+                     | INTEGER_LITERAL RANGE_INCLUSIVE INTEGER_LITERAL
+                     | CHAR_LITERAL RANGE_INCLUSIVE CHAR_LITERAL"""
+
+
+def p_lista_patrones(p):
+    """lista_patrones : patron_match
+                      | lista_patrones COMMA patron_match"""
+
+
+# match como valor:  let r = match x { ... };
+def p_valor_match(p):
+    "valor : expresion_match"
+
+
+# use std::io;  use std::collections::HashMap;
+def p_sentencia_use(p):
+    "sentencia : USE ruta SEMICOLON"
+
+
+# Funciones asociadas sin retorno dentro de impl
+def p_elemento_impl_sin_retorno(p):
+    """elemento_impl : FN ID LPAREN RPAREN bloque
+                     | FN ID LPAREN lista_parametros RPAREN bloque"""
