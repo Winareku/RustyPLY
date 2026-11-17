@@ -21,7 +21,10 @@ def seccion_errores(titulo, errores):
 def guardar_log(fase, usuario, texto, ahora=None, carpeta="logs"):
     ahora = ahora or datetime.now()
     os.makedirs(carpeta, exist_ok=True)
-    nombre = f"{fase}-{usuario}-{ahora.strftime('%d-%m-%Y-%Hh%M')}.txt"
+    if fase == "semantico":
+        nombre = f"{fase}-{usuario}-{ahora.strftime('%d%m%Y-%Hh%M')}.txt"
+    else:
+        nombre = f"{fase}-{usuario}-{ahora.strftime('%d-%m-%Y-%Hh%M')}.txt"
     destino = os.path.join(carpeta, nombre)
     with open(destino, "w", encoding="utf-8") as f:
         f.write(texto)

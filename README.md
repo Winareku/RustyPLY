@@ -1,11 +1,11 @@
 # Analizador para Rust - Lenguajes de Programación
 > Grupo 11
 
-| Integrante | Usuario Git | Léxico | Sintáctico (avance 2) |
-|---|---|---|---|
-| Windsor Estrada | @Winareku | Delimitadores, comentarios, newline/espacios | `gramatica/windsor.py` · `algoritmos/sintactico/algoritmo1.rs` |
-| Israel Romero | @Madakase | Identificadores, macros, reservadas, operadores | `gramatica/israel.py` · `algoritmos/sintactico/algoritmo2.rs` |
-| César Moreira | @MoreiraC18 | Literales, tipos de datos, errores | `gramatica/cesar.py` · `algoritmos/sintactico/algoritmo3.rs` |
+| Integrante | Usuario Git | Léxico | Sintáctico (avance 2) | Semántico (avance 3) |
+|---|---|---|---|---|
+| Windsor Estrada | @Winareku | Delimitadores, comentarios, newline/espacios | `gramatica/windsor.py` · `algoritmos/sintactico/algoritmo1.rs` | `reglas_windsor.py` · Tipos en aritmética y condiciones |
+| Israel Romero | @Madakase | Identificadores, macros, reservadas, operadores | `gramatica/israel.py` · `algoritmos/sintactico/algoritmo2.rs` | `reglas_israel.py` · Existencia de variables y mutabilidad |
+| César Moreira | @MoreiraC18 | Literales, tipos de datos, errores | `gramatica/cesar.py` · `algoritmos/sintactico/algoritmo3.rs` | `reglas_cesar.py` · Funciones y structs |
 
 ## Requisitos
 
@@ -19,9 +19,10 @@ pip install -r requirements.txt
 python main.py algoritmos/algoritmo1.rs Winareku                        # léxico (por defecto)
 python main.py algoritmos/sintactico/algoritmo2.rs Madakase --fase sintactico
 python main.py algoritmos/sintactico/ejemplo_errores.rs Winareku --fase sintactico
+python main.py algoritmos/semantico/ejemplo_errores.rs Winareku --fase semantico
 ```
 
-Genera `logs/<fase>-<usuario>-DD-MM-AAAA-HHhMM.txt` (tokens y errores léxicos en la fase léxica; errores léxicos y sintácticos en la sintáctica).
+Genera `logs/<fase>-<usuario>-DD-MM-AAAA-HHhMM.txt` para léxico y sintáctico, y `logs/semantico-<usuario>-DDMMAAAA-HHhMM.txt` para el semántico.
 
 ## Estructura
 
@@ -30,6 +31,11 @@ Genera `logs/<fase>-<usuario>-DD-MM-AAAA-HHhMM.txt` (tokens y errores léxicos e
 │   ├── algoritmo1.rs
 │   ├── algoritmo2.rs
 │   ├── algoritmo3.rs
+│   ├── semantico/              # Programas de prueba (semántico)
+│   │   ├── algoritmo1.rs
+│   │   ├── algoritmo2.rs
+│   │   ├── algoritmo3.rs
+│   │   └── ejemplo_errores.rs  # Prueba de errores semánticos
 │   └── sintactico/             # Programas de prueba (sintáctico)
 │       ├── algoritmo1.rs
 │       ├── algoritmo2.rs
@@ -37,17 +43,25 @@ Genera `logs/<fase>-<usuario>-DD-MM-AAAA-HHhMM.txt` (tokens y errores léxicos e
 │       └── ejemplo_errores.rs  # Prueba de errores sintácticos
 ├── analizador/
 │   ├── comun/                  # Token, ErrorCompilador y utilidades de logs
-│   │   ├── **init**.py
+│   │   ├── __init__.py
 │   │   ├── logs.py
 │   │   └── modelos.py
-│   ├── **init**.py
+│   ├── __init__.py
 │   ├── lexico/                 # FASE 1 (hecha)
-│   │   ├── **init**.py
+│   │   ├── __init__.py
 │   │   ├── reglas.py
 │   │   ├── reporte.py
 │   │   └── tokens.py
-│   ├── semantico/              # FASE 3 (pendiente)
-│   │   └── **init**.py
+│   ├── semantico/              # FASE 3 (en desarrollo)
+│   │   ├── arbol.py            # Nodos del AST
+│   │   ├── __init__.py         # analizar(codigo, ast) -> ResultadoSemantico
+│   │   ├── reglas_cesar.py     # Reglas semánticas de César
+│   │   ├── reglas_israel.py    # Reglas semánticas de Israel
+│   │   ├── reglas_windsor.py   # Reglas semánticas de Windsor
+│   │   ├── reporte.py          # Formato del log semántico
+│   │   ├── tabla_simbolos.py   # Tabla de símbolos y ámbitos
+│   │   ├── tipos.py            # Tipos de Rust y compatibilidad
+│   │   └── verificador.py      # Orquestador del análisis semántico
 │   └── sintactico/             # FASE 2 (hecha)
 │       ├── gramatica/
 │       │   ├── base.py         # Esqueleto común: precedencia, programa, bloque, tipo, p_error

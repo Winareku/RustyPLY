@@ -10,6 +10,7 @@ from datetime import datetime
 from analizador.comun import guardar_log
 from analizador.lexico import analizar as analizar_lexico, generar_reporte as reporte_lexico
 from analizador.sintactico import analizar as analizar_sintactico, generar_reporte as reporte_sintactico
+from analizador.semantico import analizar as analizar_semantico, generar_reporte as reporte_semantico
 
 
 # (codigo, ruta, usuario, ahora) -> texto
@@ -21,10 +22,14 @@ def fase_sintactica(codigo, ruta, usuario, ahora):
     return reporte_sintactico(analizar_sintactico(codigo), ruta, usuario, ahora)
 
 
+def fase_semantica(codigo, ruta, usuario, ahora):
+    return reporte_semantico(analizar_semantico(codigo), ruta, usuario, ahora)
+
+
 FASES = {
     "lexico": fase_lexica,
     "sintactico": fase_sintactica,
-    # "semantico": fase_semantica,
+    "semantico": fase_semantica,
 }
 
 
