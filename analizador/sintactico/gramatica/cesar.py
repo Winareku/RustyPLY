@@ -6,6 +6,8 @@
 # Pruebas: algoritmos/sintactico/algoritmo3.rs
 # ============================================================
 from .base import *
+from .base import _columna
+from ...semantico.arbol import DefinicionStruct, InstanciacionStruct
 
 def p_expresion_metodo_sin_argumento(p):
     "expresion : expresion DOT ID LPAREN RPAREN"
@@ -13,47 +15,87 @@ def p_expresion_metodo_sin_argumento(p):
 def p_expresion_metodo_generico(p):
     "expresion : expresion DOT ID PATHSEP LESS_THAN tipo GREATER_THAN LPAREN RPAREN"
 
+# Definición de structs
 def p_sentencia_definicion_struct(p):
     "sentencia : definicion_struct"
+    p[0] = p[1]
+
 
 def p_definicion_struct(p):
     "definicion_struct : STRUCT ID LBRACE campos_struct RBRACE"
+    col = _columna(p.lexer.lexdata, p.lexpos(1))
+
+    p[0] = DefinicionStruct(
+        nombre=p[2],
+        campos=p[4],
+        linea=p.lineno(1),
+        columna=col,
+    )
+
 
 def p_campos_struct(p):
     """campos_struct : lista_campos_struct
                         | lista_campos_struct COMMA
                         | empty"""
+    p[0] = p[1] or {}
+
 
 def p_lista_campos_struct(p):
     """lista_campos_struct : campo_struct
                             | lista_campos_struct COMMA campo_struct"""
+    if len(p) == 2:
+        nombre, tipo = p[1]
+        p[0] = {nombre: tipo}
+    else:
+        p[0] = dict(p[1])
+        nombre, tipo = p[3]
+        p[0][nombre] = tipo
 
 
 def p_campo_struct(p):
     "campo_struct : ID COLON tipo"
+    p[0] = (p[1], p[3])
 
 
+# Instanciación de structs
 def p_valor_instancia_struct(p):
     "valor : instancia_struct"
+    p[0] = p[1]
 
 
 def p_instancia_struct(p):
     "instancia_struct : ruta LBRACE campos_instancia_struct RBRACE"
+
+    p[0] = InstanciacionStruct(
+        nombre=p[1].nombre,
+        valores_campos=p[3],
+        linea=p[1].linea,
+        columna=p[1].columna,
+    )
 
 
 def p_campos_instancia_struct(p):
     """campos_instancia_struct : lista_campos_instancia_struct
                                 | lista_campos_instancia_struct COMMA
                                 | empty"""
+    p[0] = p[1] or {}
 
 
 def p_lista_campos_instancia_struct(p):
     """lista_campos_instancia_struct : campo_instancia_struct
-                                        | lista_campos_instancia_struct COMMA campo_instancia_struct"""
+                                    | lista_campos_instancia_struct COMMA campo_instancia_struct"""
+    if len(p) == 2:
+        nombre, valor = p[1]
+        p[0] = {nombre: valor}
+    else:
+        p[0] = dict(p[1])
+        nombre, valor = p[3]
+        p[0][nombre] = valor
 
 
 def p_campo_instancia_struct(p):
     "campo_instancia_struct : ID COLON valor"
+    p[0] = (p[1], p[3])
 
 
 #Acceso a campos de una estructura
@@ -134,13 +176,13 @@ def p_brazos_match(p):
 
 def p_lista_brazos_terminados(p):
     """lista_brazos_terminados : brazo_terminado
-                               | lista_brazos_terminados brazo_terminado"""
+                                | lista_brazos_terminados brazo_terminado"""
 
 
 def p_brazo_terminado(p):
     """brazo_terminado : patron_match FAT_ARROW valor COMMA
-                       | patron_match FAT_ARROW bloque COMMA
-                       | patron_match FAT_ARROW bloque"""
+                        | patron_match FAT_ARROW bloque COMMA
+                        | patron_match FAT_ARROW bloque"""
 
 
 def p_brazo_final(p):
@@ -155,22 +197,22 @@ def p_patron_match(p):
 
 def p_patron_simple(p):
     """patron_simple : INTEGER_LITERAL
-                     | MINUS INTEGER_LITERAL
-                     | FLOAT_LITERAL
-                     | STRING_LITERAL
-                     | CHAR_LITERAL
-                     | TRUE
-                     | FALSE
-                     | UNDERSCORE
-                     | ruta
-                     | ruta LPAREN lista_patrones RPAREN
-                     | INTEGER_LITERAL RANGE_INCLUSIVE INTEGER_LITERAL
-                     | CHAR_LITERAL RANGE_INCLUSIVE CHAR_LITERAL"""
+                        | MINUS INTEGER_LITERAL
+                        | FLOAT_LITERAL
+                        | STRING_LITERAL
+                        | CHAR_LITERAL
+                        | TRUE
+                        | FALSE
+                        | UNDERSCORE
+                        | ruta
+                        | ruta LPAREN lista_patrones RPAREN
+                        | INTEGER_LITERAL RANGE_INCLUSIVE INTEGER_LITERAL
+                        | CHAR_LITERAL RANGE_INCLUSIVE CHAR_LITERAL"""
 
 
 def p_lista_patrones(p):
     """lista_patrones : patron_match
-                      | lista_patrones COMMA patron_match"""
+                        | lista_patrones COMMA patron_match"""
 
 
 # match como valor:  let r = match x { ... };
@@ -186,4 +228,4 @@ def p_sentencia_use(p):
 # Funciones asociadas sin retorno dentro de impl
 def p_elemento_impl_sin_retorno(p):
     """elemento_impl : FN ID LPAREN RPAREN bloque
-                     | FN ID LPAREN lista_parametros RPAREN bloque"""
+                        | FN ID LPAREN lista_parametros RPAREN bloque"""
