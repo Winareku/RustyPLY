@@ -1,0 +1,24 @@
+ANALIZADOR SEMÁNTICO - RUST (PLY)
+Archivo analizado : algoritmos/semantico/ejemplo_errores_windsor.rs
+Usuario Git       : Winareku
+Fecha y hora      : 16/11/2026 23:39:29
+
+
+=== ERRORES LÉXICOS ===
+(ninguno)
+
+=== ERRORES SINTÁCTICOS ===
+(ninguno)
+
+=== ERRORES SEMÁNTICOS ===
+[ERROR semántico] Línea 10, Columna 23: Tipos incompatibles en operación aritmética '+': 'i32' y 'f64' (se requiere conversión explícita)
+[ERROR semántico] Línea 11, Columna 23: No se puede aplicar el operador '-' entre tipos no numéricos ('i32' y '&str')
+[ERROR semántico] Línea 12, Columna 23: No se puede aplicar el operador '*' entre tipos no numéricos ('bool' y 'i32')
+[ERROR semántico] Línea 15, Columna 8: La condición en la estructura de control debe ser de tipo 'bool', pero se encontró 'i32'
+[ERROR semántico] Línea 19, Columna 8: La condición en la estructura de control debe ser de tipo 'bool', pero se encontró 'f64'
+[ERROR semántico] Línea 23, Columna 11: La condición en la estructura de control debe ser de tipo 'bool', pero se encontró 'i32'
+
+=== RESUMEN ===
+Errores léxicos    : 0
+Errores sintácticos: 0
+Errores semánticos : 6

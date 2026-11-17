@@ -4,6 +4,11 @@
 
 from .base import *
 from .base import _columna
+from ...semantico.arbol import (
+    Asignacion,
+    BucleWhile,
+    DeclaracionVariable,
+)
 
 # Condiciones con conectores lógicos
 def p_expresion_comparacion(p):
@@ -22,18 +27,55 @@ def p_expresion_logica(p):
 
 def p_sentencia_declaracion(p):
     "sentencia : declaracion"
+    p[0] = p[1]
 
 def p_declaracion_inmutable(p):
     "declaracion : LET ID ASSIGN valor SEMICOLON"
+    col = _columna(p.lexer.lexdata, p.lexpos(2))
+    p[0] = DeclaracionVariable(
+        nombre=p[2],
+        tipo_declarado=None,
+        es_mutable=False,
+        valor_inicial=p[4],
+        linea=p.lineno(2),
+        columna=col,
+    )
 
 def p_declaracion_mutable(p):
     "declaracion : LET MUT ID ASSIGN valor SEMICOLON"
+    col = _columna(p.lexer.lexdata, p.lexpos(3))
+    p[0] = DeclaracionVariable(
+        nombre=p[3],
+        tipo_declarado=None,
+        es_mutable=True,
+        valor_inicial=p[5],
+        linea=p.lineno(3),
+        columna=col,
+    )
 
 def p_declaracion_tipo(p):
     "declaracion : LET ID COLON tipo ASSIGN valor SEMICOLON"
+    col = _columna(p.lexer.lexdata, p.lexpos(2))
+    p[0] = DeclaracionVariable(
+        nombre=p[2],
+        tipo_declarado=p[4],
+        es_mutable=False,
+        valor_inicial=p[6],
+        linea=p.lineno(2),
+        columna=col,
+    )
 
 def p_declaracion_mutable_tipo(p):
     "declaracion : LET MUT ID COLON tipo ASSIGN valor SEMICOLON"
+    col = _columna(p.lexer.lexdata, p.lexpos(3))
+    p[0] = DeclaracionVariable(
+        nombre=p[3],
+        tipo_declarado=p[5],
+        es_mutable=True,
+        valor_inicial=p[7],
+        linea=p.lineno(3),
+        columna=col,
+    )
 
 def p_declaracion_constante(p):
     "declaracion : CONST ID COLON tipo ASSIGN valor SEMICOLON"
@@ -56,9 +98,18 @@ def p_lista_id(p):
 
 def p_sentencia_asignacion(p):
     "sentencia : asignacion"
+    p[0] = p[1]
 
 def p_asignacion(p):
     "asignacion : ID operador_asignacion valor SEMICOLON"
+    col = _columna(p.lexer.lexdata, p.lexpos(1))
+    p[0] = Asignacion(
+        objetivo=p[1],
+        operador=p[2],
+        valor=p[3],
+        linea=p.lineno(1),
+        columna=col,
+    )
 
 def p_operador_asignacion(p):
     """operador_asignacion : ASSIGN
@@ -67,6 +118,7 @@ def p_operador_asignacion(p):
                            | MULTIPLY_ASSIGN
                            | DIVIDE_ASSIGN
                            | MODULO_ASSIGN"""
+    p[0] = p[1]
 
 
 # Estructura de datos: vector
@@ -84,6 +136,8 @@ def p_vector(p):
 
 def p_sentencia_while(p):
     "sentencia : WHILE expresion bloque"
+    col = _columna(p.lexer.lexdata, p.lexpos(1))
+    p[0] = BucleWhile(condicion=p[2], bloque=p[3], linea=p.lineno(1), columna=col)
 
 def p_sentencia_loop(p):
     "sentencia : LOOP bloque"

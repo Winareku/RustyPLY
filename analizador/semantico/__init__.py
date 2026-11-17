@@ -19,8 +19,11 @@ def analizar(codigo: str, ast: Optional[NodoAST] = None) -> ResultadoSemantico:
 
     resultado_sintactico = analizar_sintactico(codigo)
 
+    if ast is None:
+        ast = resultado_sintactico.arbol
+
     errores_semanticos: List[ErrorCompilador] = []
-    if ast is not None:
+    if ast is not None and not resultado_sintactico.errores:
         verificador = VerificadorSemantico()
         errores_semanticos = verificador.verificar(ast)
 
